@@ -1,0 +1,102 @@
+<!--index.wxml-->
+<i-message id="message" />
+<i-toast id="toast" />
+<wxs src="./../../utils.wxs" module="utils" />
+<view class="userinfo">
+    <i-button wx:if="{{!hasUserInfo && canIUse}}" type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </i-button>
+    <i-row i-class="demo-row light" wx:else>
+        <i-col span="12" i-class="demo-col userinfo-nickname">{{userInfo.nickname}}</i-col>
+        <i-col span="4" i-class="col-class" offset="8">
+            <i-avatar src="{{userInfo.avatar}}" size="large"></i-avatar>
+        </i-col>
+    </i-row>
+</view>
+
+<view class="statistics" wx:if="{{assetsStatistics}}">
+    <i-cell-group i-class="assets-statistics">
+        <i-cell i-class="" title="总资产（元）" label="{{}}" value="{{assetsStatistics.asset_holders}}" is-link="flase"><i-icon type="feedback" slot="icon" /></i-cell>
+    </i-cell-group>
+    <i-row i-class="i-row-profit assets-statistics">
+        <i-col span="8" i-class="profit">
+            <view class="i-cell-bd">
+                <view class="profit-label">日收益({{utils.formatDate(assetsStatistics.valuation_date||2006-01-02)}})</view>
+                <view wx:if="{{assetsStatistics.change >= 0}}" class="profit-money text-red">{{utils.round(assetsStatistics.change || 0, 2)}}</view>
+                <view wx:if="{{assetsStatistics.change < 0}}"class="profit-money text-green">{{utils.round(assetsStatistics.change || 0, 2)}}</view>
+            </view>
+        </i-col>
+        <i-col span="8" i-class="profit">
+            <view class="i-cell-bd">
+                <view class="profit-label">持有收益</view>
+                <view wx:if="{{assetsStatistics.profit_holders >= 0}}" class="profit-money text-red">{{utils.round(assetsStatistics.profit_holders || 0, 2)}}</view>
+                <view wx:else class="profit-money text-green">{{utils.round(assetsStatistics.profit_holders || 0, 2)}}</view>
+            </view>
+        </i-col>
+        <i-col span="8" i-class="profit">
+            <view class="i-cell-bd" bindtap="assetSttistictRefresh">
+                <view class="profit-label">总收益<i-icon type="refresh" /></view>
+                <view wx:if="{{assetsStatistics.profit >= 0}}" class="profit-money text-red">{{utils.round(assetsStatistics.profit || 0, 2)}}</view>
+                <view wx:else class="profit-money text-green">{{utils.round(assetsStatistics.profit || 0, 2)}}</view>
+            </view>
+        </i-col>
+    </i-row>
+</view>
+
+<block wx:if="{{fundAssetStatistics[0]}}">
+<i-panel i-class="fund assets-panel" title="基金">
+    <i-row i-class="assets-panel-head">
+        <i-col span="12" i-class="panel-text-left">
+            <view class="profit-label">名称/总资产</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">持有收益</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">日收益</view>
+        </i-col>
+    </i-row>
+    <block wx:for="{{fundAssetStatistics}}" wx:key="symbol" wx:for-item="asset">
+        <i-row i-class="assets-panel-list" wx:if="{{asset.asset_holders}}">
+            <i-col span="12" i-class="panel-text-left">
+                <view class="i-cell-bd" id="{{asset.symbol}}" bindtap="getFundTransactions">
+                    <view class="assets-panel-label">{{asset.name}}</view>
+                    <view class="assets-panel-desc">{{asset.asset_holders||0}}</view>
+                </view>
+            </i-col>
+            <i-col span="6" i-class="panel-text-right">
+                <view class="i-cell-bd" wx:if="{{asset.profit_holders>0}}">
+                    <view class="assets-panel-label text-red">+{{asset.profit_holders}}</view>
+                    <view class="assets-panel-desc text-red">{{utils.toPercent(asset.yield_holders)}}</view>
+                </view>
+                <view class="i-cell-bd" wx:else>
+                    <view class="assets-panel-label text-green">{{asset.profit_holders}}</view>
+                    <view class="assets-panel-desc text-green">{{utils.toPercent(asset.yield_holders)}}</view>
+                </view>
+            </i-col>
+            <i-col span="6" i-class="panel-text-right">
+                <view class="i-cell-bd" id="{{asset.symbol}}" bindtap="showAssetDaily">
+                    <view class="assets-panel-label text-red"  wx:if="{{asset.change >0}}" >+{{asset.change}}</view>
+                    <view class="assets-panel-label text-red"  wx:else >{{asset.change}}</view>
+                    <view class="assets-panel-desc">{{utils.formatDate(asset.valuation_date)}}</view>
+                </view>
+            </i-col>
+        </i-row>
+    </block>
+</i-panel>
+</block>
+<block wx:else>
+<i-grid>
+    <view class="icon-item">
+        <i-icon type="lock" size="128" color="#495060"></i-icon>
+        <view class="icon-item-name">暂时没有数据，到自选添加基金交易记录。</view>
+    </view>
+</i-grid>
+</block>
+<view class="i-divider-mart">
+    <i-divider content="加载已经完成,没有其他数据" color="#ed3f14" lineColor="#ed3f14"></i-divider>
+</view>
+
+
+<i-tab-bar current="{{ current }}" fixed="true" color="#2b85e4" bindchange="handleChange">
+    <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
+    <i-tab-bar-item key="collection" icon="collection" current-icon="collection_fill" title="自选"></i-tab-bar-item>
+</i-tab-bar>

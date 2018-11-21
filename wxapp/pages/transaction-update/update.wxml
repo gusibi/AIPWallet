@@ -1,0 +1,33 @@
+<!--pages/transaction/index.wxml-->
+<i-message id="message" />
+<i-toast id="toast" />
+
+<i-cell-group i-class="assets-statistics">
+<i-cell i-class="text-center" title="{{currentFundInfo.name}}" label="{{currentFundInfo.symbol}}" value=""></i-cell>
+    </i-cell-group>
+
+<i-panel title="添加交易流水" i-class="transaction-panel">
+    <view class="i-cell i-input">
+        <view class="i-cell-hd i-input-title">交易类型</view>
+        <picker class="picker i-input-input i-cell-bd i-input-input-right" bindchange="bindTypeTransactionChange" value="{{type_transaction_index}}" range="{{type_transactions_list}}">
+            {{type_transactions_list[type_transaction_index]}}
+        </picker>
+    </view>
+    <view class="i-cell i-input">
+        <view class="i-cell-hd i-input-title">成交日期</view>
+        <picker class="picker i-input-input i-cell-bd i-input-input-right" mode="date" value="{{date_transaction}}" start="1998-09-01" end="{{currentDay}}" bindchange="bindDateChange">
+            {{date_transaction}}
+        </picker>
+    </view>
+    <i-input value="{{ turnover }}" type="digit" wx:if="{{turnover_error}}" error right title="成交金额" mode="normal" bind:change="bindTurnoverChange" placeholder="支出金额" />
+    <i-input value="{{ turnover }}" type="digit" wx:else="{{turnover_error}}" right title="成交金额" mode="normal" bind:change="bindTurnoverChange" placeholder="支出金额" />
+    <i-input value="{{ commission }}" type="digit" wx:if="{{commission_error}}" error right title="手续费" mode="normal" bind:change="bindCommissionChange" placeholder="0" />
+     <i-input value="{{ commission }}" type="digit" wx:else="{{commission_error}}" right title="手续费" mode="normal" bind:change="bindCommissionChange" placeholder="0" />
+    <i-input value="{{ net_transactions }}" type="digit" wx:if="{{net_transactions_error}}" error right title="成交净值" mode="normal" bind:change="bindNetTransactionsChange" placeholder="默认抓取最新净值" />
+    <i-input value="{{ net_transactions }}" type="digit" wx:else="{{net_transactions_error}}" right title="成交净值" mode="normal" bind:change="bindNetTransactionsChange" placeholder="默认抓取最新净值" />
+    <i-input value="{{ share_transactions }}" type="digit" wx:if="{{share_transactions_error}}" error right title="成交份额" mode="normal" bind:change="bindShareTransactionsChange" placeholder="默认根据交易金额和净值计算" />
+    <i-input value="{{ share_transactions }}" type="digit" wx:else="{{share_transactions_error}}" right title="成交份额" mode="normal" bind:change="bindShareTransactionsChange" placeholder="默认根据交易金额和净值计算" />
+    <i-input value="{{ remark }}" type="textarea" right title="备注" mode="normal" bind:change="bindRemarkChange" placeholder="交易心得" />
+</i-panel>
+
+<i-button bind:click="handleSubmit" type="primary">更新</i-button>

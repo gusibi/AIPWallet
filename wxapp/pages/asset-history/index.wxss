@@ -1,0 +1,78 @@
+/* pages/asset-history/index.wxss */
+
+.statistics {
+    border-radius: 15px;
+}
+
+.assets-statistics {
+    font-size: 32rpx;
+    padding: 0px 16px;
+    /* background:#fff; */
+}
+
+.i-row-profit {
+    text-align: center;
+    padding: 0px 16px;
+}
+
+.profit {
+    background: #fff;
+    margin: 0;
+    border-top: 1px solid #e9eaec;
+    padding: 16px 0px;
+}
+
+.profit-label {
+    line-height: 24px;
+    font-size: 13px;
+    color: #80848f;
+}
+
+.profit-money {
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: normal;
+    color: #495060;
+}
+
+.fund-asset-panel {
+    background: #f9f9f9;
+    margin: 10px 16px 0px 16px;
+}
+
+.fund-panel-head {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+    font-size: 14px;
+    color: #333;
+}
+
+.text-yellow{
+    color: #ff9900;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-green {
+    color: #19be6b;
+}
+
+.text-red {
+    color: #ed3f14;
+}
+
+.col-class {
+    height: 32px;
+    line-height: 32px;
+    color: #fff;
+    text-align: center;
+    background: #2d8cf0;
+    font-size: 12px;
+}
+
+.col-class.light {
+    background: #5cadff;
+}

@@ -1,0 +1,85 @@
+<!--pages/asset-history/index.wxml-->
+<wxs src="./../../utils.wxs" module="utils" />
+<i-message id="message" />
+<i-toast id="toast" />
+
+<view class="statistics">
+<i-cell-group i-class="assets-statistics">
+<i-cell i-class="text-center" title="{{currentFundInfo.name}}" label="{{currentFundInfo.symbol}}" value=""></i-cell>
+    </i-cell-group>
+    <i-row i-class="i-row-profit assets-statistics">
+        <i-col span="12" i-class="profit">
+            <view class="i-cell-bd">
+                <view class="profit-label">日涨幅</view>
+                <view wx:if="{{fundAsset.change > 0}}" class="profit-money text-red">{{utils.toPercent(fundAsset.change/(fundAsset.asset_holders-fundAsset.change))}}</view>
+                <view wx:elif="{{fundAsset.change < 0}}" class="profit-money text-green">{{utils.toPercent(fundAsset.change/(fundAsset.asset_holders-fundAsset.change))}}</view>
+                <view wx:else class="profit-money yellow">{{utils.toPercent(fundAsset.change/(fundAsset.asset_holders-fundAsset.change))}}</view>
+            </view>
+        </i-col>
+        <i-col span="12" i-class="profit">
+            <view class="i-cell-bd" id="{{fundAsset.symbol}}" bindtap='handleRefresh'>
+                <view class="profit-label">日收益（元）<i-icon type="refresh" /></view>
+                <view wx:if="{{fundAsset.change > 0}}" class="profit-money text-red">+{{fundAsset.change}}</view>
+                <view wx:elif="{{fundAsset.change < 0}}" class="profit-money text-green">{{fundAsset.change}}</view>
+                <view wx:else class="profit-money yellow">{{fundAsset.change}}</view>
+            </view>
+        </i-col>
+    </i-row>
+</view>
+<i-panel i-class="fund-asset-panel" wx:if="{{fundAsset.capitalized_cost}}">
+<i-row i-class="fund-panel-head">
+        <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">持有收益 </view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view wx:if="{{fundAsset.profit_holders > 0}}" class="profit-label text-red">+{{fundAsset.profit_holders}}</view>
+            <view wx:elif="{{fundAsset.profit_holders < 0}}" class="profit-label text-green">{{fundAsset.profit_holders}}</view>
+            <view wx:else class="profit-label">{{fundAsset.profit_holders}}</view>
+        </i-col>
+        <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">累计收益 </view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-right">
+            <view wx:if="{{fundAsset.profit > 0}}" class="profit-label text-red">+{{fundAsset.profit}}</view>
+            <view wx:elif="{{fundAsset.profit < 0}}" class="profit-label text-green">{{fundAsset.profit}}</view>
+            <view wx:else class="profit-label">{{fundAsset.profit}}</view>
+        </i-col>
+    </i-row>
+    <i-row i-class="fund-panel-head">
+    <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">最新净值</view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view class="profit-label">{{fundAsset.nav || fundAsset.last_nav}}</view>
+        </i-col>
+    <i-col span="6" i-class="panel-text-left">
+            <view class="profit-label">持有份额<i-icon type="transaction_fill" /></view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label" id="{{fundAsset.symbol}}" bindtap="getFundTransactions">{{utils.round(fundAsset.share_holders, 2)}}</view>
+        </i-col>
+        
+    </i-row>
+</i-panel>
+<block  wx:for="{{fundAssetDailies}}" wx:key="valuation_date" wx:for-item="daily">
+<block wx:if="{{ daily }}">
+<i-alert type="error" wx:if="{{daily.change > 0}}">
+<i-row i-class="row-class">
+        <i-col span="8" i-class="">{{daily.valuation_date}}</i-col>
+        <i-col span="8" offset="8" i-class="">+{{daily.change}}（{{daily.asset_holders}}）</i-col>
+    </i-row>
+</i-alert>
+<i-alert type="success" wx:elif="{{daily.change < 0}}">
+<i-row i-class="row-class">
+        <i-col span="8" i-class="">{{daily.valuation_date}}</i-col>
+        <i-col span="8" offset="8" i-class="">{{daily.change}}（{{daily.asset_holders}}）</i-col>
+    </i-row>
+</i-alert>
+<i-alert type="warning" wx:else>
+    <i-row i-class="row-class">
+        <i-col span="8" i-class="">{{daily.valuation_date}}</i-col>
+        <i-col span="8" offset="8" i-class="">{{daily.change || 0}}（{{daily.asset_holders}}）</i-col>
+    </i-row>
+</i-alert>
+</block>
+</block>

@@ -1,0 +1,115 @@
+/* pages/transaction-history/index.wxss */
+
+@import "../../app.wxss";
+.statistics {
+    border-radius: 15px;
+}
+
+.assets-statistics {
+    font-size: 32rpx;
+    padding: 0px 16px;
+    /* background:#fff; */
+}
+
+.i-row-profit {
+    text-align: center;
+    padding: 0px 16px;
+}
+
+.profit {
+    background: #fff;
+    margin: 0;
+    border-top: 1px solid #e9eaec;
+    padding: 16px 0px;
+}
+
+.profit-label {
+    line-height: 24px;
+    font-size: 13px;
+    color: #80848f;
+}
+
+.profit-money {
+    line-height: 24px;
+    font-size: 24px;
+    font-weight: normal;
+    color: #495060;
+}
+
+.fund-asset-panel {
+    background: #f9f9f9;
+    margin: 10px 16px 0px 16px;
+}
+
+.text-yellow{
+    color: #ff9900;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-green {
+    color: #19be6b;
+}
+
+.text-red {
+    color: #ed3f14;
+}
+.assets-panel {
+    background: #f9f9f9;
+    margin: 0px 16px;
+}
+
+.assets-panel-head {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+    font-size: 14px;
+    color: #333;
+}
+
+.assets-panel-list {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+}
+
+.transaction-panel-label {
+    font-size: 13px;
+    color: #1c2438;
+}
+
+.fund-panel {
+    background: #f9f9f9;
+    margin: 0px 16px;
+}
+
+.fund-panel-head {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+    font-size: 14px;
+    color: #333;
+}
+
+.i-swipeout-item {
+    border-bottom: #333 solid 1px;
+}
+
+/*自定义按钮*/
+.i-swipeout-button-group {
+    height: 100%;
+    width: 100%;
+}
+
+.i-swipeout-button {
+    width: 40px;
+    float: left;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    background: #ed3f14;
+    color: #fff;
+    align-items: center;
+}

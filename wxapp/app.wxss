@@ -1,0 +1,130 @@
+/**app.wxss**/
+
+.weui-flex {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center
+}
+
+.weui-cells {
+    margin-top: 0;
+    opacity: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-transition: .3s;
+    transition: .3s
+}
+
+.weui-cells:after,
+.weui-cells:before {
+    display: none
+}
+
+.weui-cells_show {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+}
+
+.weui-cell:before {
+    right: 15px
+}
+
+.kind-list__item {
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 2px;
+    overflow: hidden
+}
+
+.kind-list__item:first-child {
+    margin-top: 0
+}
+
+.kind-list__img {
+    width: 30px;
+    height: 30px
+}
+
+.kind-list__item-hd {
+    padding: 20px;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s
+}
+
+.kind-list__item-hd_show {
+    opacity: .4
+}
+
+.kind-list__item-bd {
+    height: 0;
+    overflow: hidden
+}
+
+.kind-list__item-bd_show {
+    height: auto
+}
+
+page {
+    background: #f9f9f9;
+}
+
+
+/*
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 200rpx 0;
+    box-sizing: border-box;
+}
+*/
+
+.panel-text-left {
+    text-align: left;
+}
+
+.panel-text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-yellow {
+    color: #ff9900;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-green {
+    color: #19be6b;
+}
+
+.text-red {
+    color: #ed3f14;
+}
+
+.flex {
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+}
+
+
+/*  底部悬浮导航  */
+
+.fix_nav_wp {
+    height: 110rpx;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    border-top: 1rpx solid #e5e5e5;
+    z-index: 10
+}

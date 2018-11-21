@@ -1,0 +1,19 @@
+{
+    "navigationBarTitleText": "自选基金",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": false,
+    "usingComponents": {
+        "i-input": "../../ui/iview/input/index",
+        "i-message": "../../ui/iview/message/index",
+        "i-button": "../../ui/iview/button/index",
+        "i-panel": "../../ui/iview/panel/index",
+        "i-row": "../../ui/iview/row/index",
+        "i-col": "../../ui/iview/col/index",
+        "i-icon": "../../ui/iview/icon/index",
+        "i-swipeout": "../../ui/iview/swipeout/index",
+        "i-tab-bar": "../../ui/iview/tab-bar/index",
+        "i-tab-bar-item": "../../ui/iview/tab-bar-item/index",
+        "i-toast": "../../ui/iview/toast/index",
+        "i-divider": "../../ui/iview/divider/index"
+    }
+}

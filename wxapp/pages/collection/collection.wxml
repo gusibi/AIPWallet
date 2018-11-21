@@ -1,0 +1,134 @@
+<!--pages/collection/collection.wxml-->
+<wxs src="./../../utils.wxs" module="utils" />
+<i-message id="message" />
+<i-toast id="toast" />
+
+<i-row i-class="search-field">
+    <i-col span="19" i-class="search-input">
+        <i-input value="{{ searchValue }}" type="number" maxlength="6" title="基金代码" right error="{{showError}}" mode="wrapped" bind:change="onChange" bind:focus="onFocus" placeholder="请输入6位基金代码" /></i-col>
+    <i-col span="5" i-class="">
+        <i-button bindtap="onSearch" size="36" bind:click="onSearch" inline="true" type="primary">搜索</i-button>
+    </i-col>
+</i-row>
+
+<i-panel wx:if="{{fundInfo}}" i-class="fund-panel" title="基金">
+    <i-row i-class="fund-panel-head">
+        <i-col span="12" i-class="panel-text-left">
+            <view class="profit-label">基金名称</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">单位净值</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">日涨幅</view>
+        </i-col>
+    </i-row>
+    <i-swipeout i-class="i-swipeout-item" operateWidth="{{180}}">
+        <view slot="content">
+            <i-row>
+                <i-col span="12" i-class="panel-text-left">
+                    <view class="i-cell-bd">
+                        <view class="fund-panel-label">{{fundInfo.name}}</view>
+                        <view class="fund-panel-desc">{{fundInfo.symbol}}</view>
+                    </view>
+                </i-col>
+                <i-col span="6" i-class="panel-text-right">
+                    <view class="i-cell-bd">
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-label text-red">{{fundInfo.last_nav}}</view>
+                        <view wx:else class="fund-panel-label text-green">{{fundInfo.last_nav}}</view>
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-desc text-red">{{utils.formatDate(fundInfo.valuation_date)}}</view>
+                        <view wx:else class="fund-panel-desc text-green">{{utils.formatDate(fundInfo.valuation_date)}}</view>
+                    </view>
+                </i-col>
+                <i-col span="6" i-class="panel-text-right">
+                    <view class="i-cell-bd">
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-label text-red">+{{utils.toPercent(fundInfo.last_dividend/100, 2)}}</view>
+                        <view wx:else class="fund-panel-label text-green">{{utils.toPercent(fundInfo.last_dividend/100, 2)}}</view>
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-desc text-red">+{{utils.round(fundInfo.last_nav-(fundInfo.last_nav/(1+fundInfo.last_dividend/100)), 4)}}</view>
+                        <view wx:else class="fund-panel-desc text-green">{{utils.round(fundInfo.last_nav-(fundInfo.last_nav/(1+fundInfo.last_dividend/100)), 4)}}</view>
+                    </view>
+                </i-col>
+            </i-row>
+        </view>
+        <view slot="button" class="i-swipeout-button-group" style="background:#2db7f5;">
+            <view class="i-swipeout-button" style="width:60px">
+                <!-- <i-icon wx:if="{{fundInfo.is_liked}}" size="32" type="like_fill"></i-icon>
+                <i-icon wx:else size="32" type="like"></i-icon> -->
+                <i-icon wx:if="{{fundInfo.is_liked}}" size="32" id="{{fundInfo.symbol}}" type="like_fill" bindtap="unfollow_fund"></i-icon>
+                <i-icon wx:else size="32" id="{{fundInfo.symbol}}" type="like" bindtap="follow_fund"></i-icon>
+            </view>
+            <view class="i-swipeout-button" style="width:60px">
+                <i-icon size="32" type="add"></i-icon>
+            </view>
+            <view class="i-swipeout-button" style="width:60px">
+                <i-icon size="32" type="time"></i-icon>
+            </view>
+        </view>
+
+    </i-swipeout>
+</i-panel>
+
+<i-panel wx:if="{{followingFunds}}" i-class="fund-panel" title="自选基金">
+    <i-row i-class="fund-panel-head">
+        <i-col span="12" i-class="panel-text-left">
+            <view class="profit-label">基金名称</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">单位净值</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">日涨幅</view>
+        </i-col>
+    </i-row>
+    <i-swipeout wx:for="{{followingFunds}}" wx:key="symbol" wx:for-item="fundInfo" i-class="i-swipeout-item" operateWidth="{{180}}">
+        <view slot="content">
+            <i-row>
+                <i-col span="12" i-class="panel-text-left">
+                    <view class="i-cell-bd">
+                        <view class="fund-panel-label">{{fundInfo.name}}</view>
+                        <view class="fund-panel-desc">{{fundInfo.symbol}}</view>
+                    </view>
+                </i-col>
+                <i-col span="6" i-class="panel-text-right">
+                    <view class="i-cell-bd">
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-label text-red">{{fundInfo.last_nav}}</view>
+                        <view wx:else="{{fundInfo.last_dividend <= 0}}" class="fund-panel-label text-green">{{fundInfo.last_nav}}</view>
+                        <view class="fund-panel-desc">{{utils.formatDate(fundInfo.valuation_date)}}</view>
+                    </view>
+                </i-col>
+                <i-col span="6" i-class="panel-text-right">
+                    <view class="i-cell-bd">
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-label text-red">+{{utils.toPercent(fundInfo.last_dividend/100, 2)}}</view>
+                        <view wx:else class="fund-panel-label text-green">{{utils.toPercent(fundInfo.last_dividend/100, 2)}}</view>
+                        <view wx:if="{{fundInfo.last_dividend > 0}}" class="fund-panel-desc text-red">+{{utils.round(fundInfo.last_nav-(fundInfo.last_nav/(1+fundInfo.last_dividend/100)), 4)}}</view>
+                        <view wx:else class="fund-panel-desc text-green">{{utils.round(fundInfo.last_nav-(fundInfo.last_nav/(1+fundInfo.last_dividend/100)), 4)}}</view>
+                    </view>
+                </i-col>
+            </i-row>
+        </view>
+        <view slot="button" class="i-swipeout-button-group" style="background:#2db7f5;">
+            <view class="i-swipeout-button" style="width:60px">
+                <!-- <i-icon wx:if="{{fundInfo.is_liked}}" size="32" type="like_fill"></i-icon>
+                <i-icon wx:else size="32" type="like"></i-icon> -->
+                <i-icon wx:if="{{fundInfo.is_liked}}" size="32" id="{{fundInfo.symbol}}" type="like_fill" bindtap="unfollow_fund"></i-icon>
+                <i-icon wx:else size="32" id="{{fundInfo.symbol}}" type="like_fill" bindtap="follow_fund"></i-icon>
+            </view>
+            <view class="i-swipeout-button" style="width:60px">
+                <i-icon size="32" type="add" id="{{fundInfo.symbol}}" bindtap="add_fund_transaction"></i-icon>
+            </view>
+            <view class="i-swipeout-button" style="width:60px">
+                <i-icon size="32" type="time" id="{{fundInfo.symbol}}" bindtap="getFundTransactions"></i-icon>
+            </view>
+        </view>
+
+    </i-swipeout>
+</i-panel>
+
+<view class="i-divider-mart">
+    <i-divider content="加载已经完成,没有其他数据" color="#ed3f14" lineColor="#ed3f14"></i-divider>
+</view>
+
+<i-tab-bar current="{{ current }}" fixed="true" color="#2b85e4" bindchange="handleChange">
+    <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
+    <i-tab-bar-item key="collection" icon="collection" current-icon="collection_fill" title="自选"></i-tab-bar-item>
+</i-tab-bar>

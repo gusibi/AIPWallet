@@ -1,0 +1,19 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/logs/logs",
+        "pages/asset-history/index",
+        "template/nav",
+        "pages/collection/collection",
+        "pages/transaction/index",
+        "pages/transaction-history/index",
+        "pages/transaction-update/update"
+    ],
+    "window": {
+        "enablePullDownRefresh": true,
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#f9f9f9",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle": "black"
+    }
+}

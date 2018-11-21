@@ -1,0 +1,52 @@
+/*小数转百分数*/
+/*Number()数据类型转换，指定截取转换后的小数点后几位(四舍五入)*/
+var toPercent = function(point) {
+    var str = (point * 100).toFixed(2);
+    str += "%";
+    return str;
+}
+
+var round = function(f, n) {
+    return Number(f).toFixed(n)
+}
+
+var isNumeric = function(n) {
+    var is_number = !isNaN(parseFloat(n)) && isFinite(n);
+    if (!is_number) {
+        return "error"
+    }
+}
+
+var formatNumber = function(n){
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
+var formatDate = function(date){
+    // yyyy-MM-dd to MM-dd
+    console.log("date", date)
+    var date = getDate(date)
+    console.log(date)
+    console.log(date.getMonth())
+    return formatNumber(date.getMonth()+1) + "-" + formatNumber(date.getDate())
+}
+
+var type_transactions = {
+    "purchase": "购买",
+    "aip": "定投",
+    "redeem": "赎回",
+    "dividend": "现金分红",
+    "reinvestment": "红利再投资"
+};
+
+var typeTransactions2zh = function(type_transaction){
+    return type_transactions[type_transaction]
+}
+
+module.exports = {
+    toPercent: toPercent,
+    round: round,
+    isNumeric: isNumeric,
+    formatDate: formatDate,
+    typeTransactions2zh: typeTransactions2zh
+};

@@ -1,0 +1,5 @@
+<i-tab-bar current="{{ current }}" bindchange="handleChange">
+    <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
+    <i-tab-bar-item key="add" icon="add" current-icon="add" title="添加"></i-tab-bar-item>
+    <i-tab-bar-item key="collection" icon="collection" current-icon="collection_fill" title="关注"></i-tab-bar-item>
+</i-tab-bar>

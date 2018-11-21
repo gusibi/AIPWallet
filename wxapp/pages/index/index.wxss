@@ -1,0 +1,130 @@
+/**index.wxss**/
+
+@import "../../app.wxss";
+
+.logo {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.userinfo {
+    padding: 0px 10px 20px;
+}
+
+.userinfo-avatar {
+    width: 64rpx;
+    height: 64rpx;
+    margin: 10rpx;
+    border-radius: 50%;
+    position: relative;
+    float: right;
+}
+
+.userinfo-nickname {
+    color: #1c2438;
+    font-weight: bold;
+    font-size: 64rpx;
+    text-align: initial;
+    padding-left: 10px;
+}
+
+.statistics {
+    border-radius: 15px;
+}
+
+.assets-statistics {
+    font-size: 32rpx;
+    padding: 0px 16px;
+    /* background:#fff; */
+}
+
+.i-row-profit {
+    color: #333;
+    text-align: center;
+    padding: 0px 16px;
+}
+
+.profit {
+    background: #fff;
+    margin: 0;
+    border-top: 1px solid #e9eaec;
+    padding: 20px 0px;
+}
+
+.profit-label {
+    line-height: 24px;
+    font-size: 14px;
+    color: #80848f;
+}
+
+.profit-money {
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.assets-panel {
+    background: #f9f9f9;
+    margin: 0px 16px;
+}
+
+.assets-panel-head {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+    font-size: 14px;
+    color: #333;
+}
+
+.assets-panel-list {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+}
+
+.assets-panel-label {
+    font-size: 16px;
+    color: #000;
+}
+
+.assets-panel-desc {
+    font-size: 14px;
+    color: #666;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-green {
+    color: #19be6b;
+}
+
+.text-red {
+    color: #ed3f14;
+}
+
+.usermotto {
+    margin-top: 200px;
+}
+
+.i-col-offset-8 {
+    margin-left: 33.33333333%;
+}
+
+.icon-item{
+    display: block;
+    padding: 16px 25%;
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+.icon-item-name{
+    font-size: 13px;
+    color: #495060;
+}
+
+.i-divider-mart {
+    margin-bottom: 40px;
+}

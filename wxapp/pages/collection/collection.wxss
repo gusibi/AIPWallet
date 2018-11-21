@@ -1,0 +1,72 @@
+/* pages/collection/collection.wxss */
+
+.search-icon {
+    padding: 12px 0px;
+}
+
+.search-input {
+    overflow: auto;
+}
+
+.fund-panel {
+    background: #f9f9f9;
+    margin: 0px 16px;
+}
+
+.fund-panel-head {
+    background: #fff;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e9eaec;
+    font-size: 14px;
+    color: #333;
+}
+
+.fund-panel-list {
+    background: #fff;
+    padding: 0 0px;
+    border-bottom: 1px solid #e9eaec;
+}
+
+.fund-panel-label {
+    white-space: normal;
+    font-size: 14px;
+    color: #1c2438;
+}
+
+.fund-panel-desc{
+    font-size: 13px;
+    color: #495060;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-green {
+    color: #19be6b;
+}
+
+.text-red {
+    color: #ed3f14;
+}
+
+.i-swipeout-item {
+    border-bottom: #333 solid 1px;
+}
+
+/*自定义按钮*/
+.i-swipeout-button-group {
+    height: 100%;
+    width: 100%;
+}
+
+.i-swipeout-button {
+    width: 70px;
+    float: left;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    background: #2d8cf0;
+    color: #fff;
+    align-items: center;
+}

@@ -1,0 +1,152 @@
+<!--pages/transaction-history/index.wxml-->
+<wxs src="./../../utils.wxs" module="utils" />
+<i-message id="message" />
+<i-toast id="toast" />
+
+<view class="statistics">
+<i-cell-group i-class="assets-statistics">
+<i-cell i-class="text-center" title="{{currentFundInfo.name}}" label="{{currentFundInfo.symbol}}" value=""></i-cell>
+    </i-cell-group>
+    <i-row i-class="i-row-profit assets-statistics">
+        <i-col span="12" i-class="profit">
+            <view class="i-cell-bd"  id="{{fundAsset.symbol}}" bindtap='handleRefresh'>
+                <view class="profit-label">持有金额（元）<i-icon type="refresh" /></view>
+                <view class="profit-money text-yellow">{{fundAsset.asset_holders || 0}}</view>
+            </view>
+        </i-col>
+        <i-col span="12" i-class="profit">
+            <view class="i-cell-bd" id="{{currentFundInfo.symbol}}" bindtap="showAssetDaily">
+                <view class="profit-label">日收益（{{utils.formatDate(fundAsset.valuation_date || 2006-01-02)}}）</view>
+                <view wx:if="{{fundAsset.change > 0}}" class="profit-money text-red">+{{fundAsset.change || 0}}</view>
+                <view wx:elif="{{fundAsset.change > 0}}" class="profit-money text-green">{{fundAsset.change || 0}}</view>
+                <view wx:else class="profit-money yellow">{{fundAsset.change || 0}}</view>
+            </view>
+        </i-col>
+    </i-row>
+</view>
+
+<i-panel i-class="fund-asset-panel" wx:if="{{fundAsset.capitalized_cost}}">
+<i-row i-class="fund-panel-head">
+        <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">持有收益 </view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view wx:if="{{fundAsset.profit_holders > 0}}" class="profit-label text-red">+{{fundAsset.profit_holders}}</view>
+            <view wx:elif="{{fundAsset.profit_holders < 0}}" class="profit-label text-green">{{fundAsset.profit_holders}}</view>
+            <view wx:else class="profit-label">{{fundAsset.profit_holders}}</view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view class="profit-label">持有收益率 </view>
+        </i-col>
+        <i-col span="5" i-class="panel-text-right">
+            <view wx:if="{{fundAsset.profit_holders > 0}}" class="profit-label text-red">{{utils.toPercent(fundAsset.profit_holders/fundAsset.capitalized_cost)}}</view>
+            <view wx:elif="{{fundAsset.profit_holders < 0}}" class="profit-label text-green">{{utils.toPercent(fundAsset.profit_holders/fundAsset.capitalized_cost)}}</view>
+            <view wx:else class="profit-label text-red">{{utils.toPercent(fundAsset.profit_holders/fundAsset.capitalized_cost)}}</view>
+        </i-col>
+    </i-row>
+    <i-row i-class="fund-panel-head">
+    <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">累计收益 </view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view wx:if="{{fundAsset.profit > 0}}" class="profit-label text-red">+{{fundAsset.profit}}</view>
+            <view wx:elif="{{fundAsset.profit < 0}}" class="profit-label text-green">{{fundAsset.profit}}</view>
+            <view wx:else class="profit-label">{{fundAsset.profit}}</view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view class="profit-label">持有成本 </view>
+        </i-col>
+        <i-col span="5" i-class="panel-text-right">
+            <view class="profit-label">{{utils.round(fundAsset.capitalized_cost, 2)}}</view>
+        </i-col>
+    </i-row>
+    <i-row i-class="fund-panel-head">
+    <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">持有单价 </view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view class="profit-label">{{fundAsset.nav_holders}}</view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view class="profit-label">持有份额 </view>
+        </i-col>
+        <i-col span="5" i-class="panel-text-right">
+            <view class="profit-label">{{utils.round(fundAsset.share_holders, 2)}}</view>
+        </i-col>
+    </i-row>
+    <i-row i-class="fund-panel-head">
+    <i-col span="5" i-class="panel-text-left">
+            <view class="profit-label">日涨跌幅</view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view wx:if="{{fundAsset.change > 0}}" class="profit-label text-red">{{utils.toPercent(fundAsset.change/(fundAsset.asset_holders-fundAsset.change))}}</view>
+            <view wx:elif="{{fundAsset.change < 0}}" class="profit-label text-green">{{utils.toPercent(fundAsset.change/(fundAsset.asset_holders-fundAsset.change))}}</view>
+            <view wx:else class="profit-label text-red">{{utils.toPercent(fundAsset.change/(fundAsset.asset_holders-fundAsset.change))}}</view>
+        </i-col>
+        <i-col span="7" i-class="panel-text-left">
+            <view class="profit-label">最新净值</view>
+        </i-col>
+        <i-col span="5" i-class="panel-text-right">
+            <view class="profit-label">{{fundAsset.nav || fundAsset.last_nav}}</view>
+        </i-col>
+    </i-row>
+</i-panel>
+
+<i-button bind:click="handleAddTransaction" type="primary" data-symbol="{{currentFundInfo.symbol}}">添加记录</i-button>
+
+<i-panel wx:if="{{transactionHistories}}" i-class="fund-panel" title="交易流水">
+    <i-row i-class="fund-panel-head">
+        <i-col span="6" i-class="panel-text-left">
+            <view class="profit-label">成交日期</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">交易类型</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">成交金额</view>
+        </i-col>
+        <i-col span="6" i-class="panel-text-right">
+            <view class="profit-label">成交净值</view>
+        </i-col>
+    </i-row>
+    <i-swipeout wx:for="{{transactionHistories}}" wx:key="id" wx:for-item="transaction" i-class="i-swipeout-item" operateWidth="{{80}}">
+    <view slot="content" i-class="assets-panel-list">
+        <i-row  wx:if="{{transaction.symbol}}">
+            <i-col span="6" i-class="panel-text-left">
+                <view class="i-cell-bd">
+                    <view class="transaction-panel-label text-yellow">{{transaction.date_transaction}}</view>
+                </view>
+            </i-col>
+            <i-col span="6" i-class="panel-text-right">
+                <view class="i-cell-bd">
+                    <view class="transaction-panel-label">{{utils.typeTransactions2zh(transaction.type_transactions)}}</view>
+                </view>
+            </i-col>
+            <i-col span="6" i-class="panel-text-right">
+                <view class="i-cell-bd">
+                    <view class="transaction-panel-label">{{transaction.turnover}}</view>
+                </view>
+            </i-col>
+            <i-col span="6" i-class="panel-text-right">
+                <view class="i-cell-bd">
+                    <view class="transaction-panel-label">{{transaction.net_transactions}}</view>
+                </view>
+            </i-col>
+        </i-row>
+        </view>
+        <view slot="button" class="i-swipeout-button-group" style="background:#ed3f14;">
+            <view class="i-swipeout-button" style="width:40px">
+                <i-icon size="24" type="brush" id="{{transaction.id}}" bindtap="updateFundTransaction"></i-icon>
+            </view>
+            <view class="i-swipeout-button" style="width:40px">
+                <i-icon size="24" type="trash" id="{{transaction.id}}" bindtap="deleteTransactionTap"></i-icon>
+            </view>
+        </view>
+    </i-swipeout>
+    <i-action-sheet visible="{{ showDelete }}" actions="{{ actionDelete }}" show-cancel bind:cancel="handleDeleteCancel" bind:click="deleteFundTransactions" mask-closable="{{ false }}">
+        <view slot="header" style="padding: 16px">
+            <view style="color: #444;font-size: 16px">确定吗？</view>
+            <text>删除后无法恢复哦</text>
+        </view>
+    </i-action-sheet>
+</i-panel>
