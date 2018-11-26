@@ -1,6 +1,6 @@
 {
     "navigationBarTitleText": "定投账本",
-        "onReachBottomDistance": false,
+    "onReachBottomDistance": false,
     "usingComponents": {
         "i-button": "../../ui/iview/button/index",
         "i-panel": "../../ui/iview/panel/index",

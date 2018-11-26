@@ -33,8 +33,13 @@ Page({
         that.setData({
             currentSymbol: symbol
         });
+        // 获取基金详情
         that.getFundInfo(symbol);
+        // 获取基金收益详情
         that.getFundsAsset(symbol);
+        // 刷新每日收益数据
+        that.refreshAssetDaily(symbol)
+        // 获取每日数据
         that.getFundsAssetDailies(symbol);
     },
 

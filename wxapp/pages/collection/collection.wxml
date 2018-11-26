@@ -128,7 +128,7 @@
     <i-divider content="加载已经完成,没有其他数据" color="#ed3f14" lineColor="#ed3f14"></i-divider>
 </view>
 
-<i-tab-bar current="{{ current }}" fixed="true" color="#2b85e4" bindchange="handleChange">
+<!-- <i-tab-bar current="{{ current }}" fixed="true" color="#2b85e4" bindchange="handleChange">
     <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
     <i-tab-bar-item key="collection" icon="collection" current-icon="collection_fill" title="自选"></i-tab-bar-item>
-</i-tab-bar>
+</i-tab-bar> -->

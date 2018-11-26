@@ -1,7 +1,7 @@
 {
     "navigationBarTitleText": "添加交易记录",
-        "enablePullDownRefresh": false,
-        "onReachBottomDistance": false,
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": false,
     "usingComponents": {
         "i-input": "../../ui/iview/input/index",
         "i-cell-group": "../../ui/iview/cell-group/index",

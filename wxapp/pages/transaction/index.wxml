@@ -1,11 +1,9 @@
-<!--pages/transaction/index.wxml-->
+<!-- pages/transaction/index.wxml -->
 <i-message id="message" />
 <i-toast id="toast" />
-
 <i-cell-group i-class="assets-statistics">
-<i-cell i-class="text-center" title="{{currentFundInfo.name}}" label="{{currentFundInfo.symbol}}" value=""></i-cell>
-    </i-cell-group>
-
+    <i-cell i-class="text-center" title="{{currentFundInfo.name}}" label="{{currentFundInfo.symbol}}" value=""></i-cell>
+</i-cell-group>
 <i-panel title="添加交易流水" i-class="transaction-panel">
     <view class="i-cell i-input">
         <view class="i-cell-hd i-input-title">交易类型</view>
@@ -29,5 +27,4 @@
     <i-input value="{{ share_transactions }}" type="digit" wx:else="{{share_transactions_error}}" right title="成交份额" mode="normal" bind:change="bindShareTransactionsChange" placeholder="默认根据交易金额和净值计算" />
     <i-input value="{{ remark }}" type="textarea" right title="备注" mode="normal" bind:change="bindRemarkChange" placeholder="交易心得" />
 </i-panel>
-
 <i-button bind:click="handleSubmit" type="primary">添加</i-button>

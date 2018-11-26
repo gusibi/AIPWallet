@@ -1,5 +1,7 @@
 //index.js
-const { $Toast } = require('../../ui/iview/base/index');
+const {
+    $Toast
+} = require('../../ui/iview/base/index');
 
 var common = require('../../common.js');
 var config = require('../../config.js');
@@ -24,7 +26,7 @@ Page({
         stockAssetStatistics: []
     },
     //事件处理函数
-    bindViewTap: function() {
+    bindViewTap: function () {
         wx.navigateTo({
             url: '../logs/logs'
         })
@@ -35,7 +37,7 @@ Page({
             type: 'error'
         });
     },
-    onPullDownRefresh: function() {
+    onPullDownRefresh: function () {
         var that = this;
         that.refreshAsset();
         that.getAssetsStatistics();
@@ -43,7 +45,7 @@ Page({
         // that.get_asset('stock');
         wx.stopPullDownRefresh()
     },
-    onLoad: function() {
+    onLoad: function () {
         var that = this;
         app.checkLogin(that.getAssetsStatistics);
         app.checkLogin(that.getAsset);
@@ -76,52 +78,52 @@ Page({
         }
     },
     /**
- * 用户点击右上角分享
- */
+     * 用户点击右上角分享
+     */
     onShareAppMessage: function () {
 
     },
-    refreshAsset: function(asset_type) {
+    refreshAsset: function (asset_type) {
         var that = this;
         var userInfo = app.globalData.userInfo
         common.request({ // 发送请求 获取 jwt
             url: '/v1/assets/refresh',
-                header: {
-                    Authorization: "Bearer " + userInfo.jwt
-                },
-                method: "GET",
-                success: function(res) {
-                    if (res.statusCode === 200) {
-                        // 得到 asset 数据 
-                        console.log(res.data)
-                        // that.setData({
-                        //     fundAssetStatistics: res.data
-                        // })
-                    } else {
-                        // 提示错误信息
-                        wx.showToast({
-                            title: res.data.message,
-                            icon: 'success',
-                            duration: 2000
-                        });
-                    }
-                },
-                fail: function(res) {
-                    console.log('网络错误');
+            header: {
+                Authorization: "Bearer " + userInfo.jwt
+            },
+            method: "GET",
+            success: function (res) {
+                if (res.statusCode === 200) {
+                    // 得到 asset 数据 
+                    console.log(res.data)
+                    // that.setData({
+                    //     fundAssetStatistics: res.data
+                    // })
+                } else {
+                    // 提示错误信息
+                    wx.showToast({
+                        title: res.data.message,
+                        icon: 'success',
+                        duration: 2000
+                    });
                 }
-            })
+            },
+            fail: function (res) {
+                console.log('网络错误');
+            }
+        })
     },
-    assetSttistictRefresh: function() {
+    assetSttistictRefresh: function () {
         var that = this;
         var userInfo = app.globalData.userInfo
-            // asset_type = asset_type || "fund"
+        // asset_type = asset_type || "fund"
         common.request({ // 发送请求 获取 jwt
             url: '/v1/assets/statistics/refresh',
             header: {
                 Authorization: "Bearer " + userInfo.jwt
             },
             method: "GET",
-            success: function(res) {
+            success: function (res) {
                 if (res.statusCode === 200) {
                     // 得到 asset 数据 
                     that.setData({
@@ -136,22 +138,22 @@ Page({
                     });
                 }
             },
-            fail: function(res) {
+            fail: function (res) {
                 console.log('assetSttistictRefresh error');
             }
         })
     },
-    getAsset: function(asset_type) {
+    getAsset: function (asset_type) {
         var that = this;
         var userInfo = app.globalData.userInfo
         asset_type = asset_type || "fund"
         common.request({ // 发送请求 获取 jwt
             url: '/v1/assets?asset_type=' + asset_type,
             header: {
-                Authorization: "Bearer " + userInfo.jwt 
+                Authorization: "Bearer " + userInfo.jwt
             },
             method: "GET",
-            success: function(res) {
+            success: function (res) {
                 if (res.statusCode === 200) {
                     // 得到 asset 数据 
                     if (asset_type == "fund") {
@@ -172,12 +174,12 @@ Page({
                     });
                 }
             },
-            fail: function(res) {
+            fail: function (res) {
                 console.log('get_asset fail');
             }
         })
     },
-    getAssetsStatistics: function() {
+    getAssetsStatistics: function () {
         var that = this;
         var userInfo = app.globalData.userInfo
         common.request({ // 发送请求 获取 jwt
@@ -186,7 +188,7 @@ Page({
                 Authorization: "Bearer " + userInfo.jwt
             },
             method: "GET",
-            success: function(res) {
+            success: function (res) {
                 if (res.statusCode === 200) {
                     // 得到 asset 数据 
                     that.setData({
@@ -201,7 +203,7 @@ Page({
                     });
                 }
             },
-            fail: function(res) {
+            fail: function (res) {
                 console.log('request token fail');
             }
         })
@@ -220,7 +222,7 @@ Page({
             url: '/pages/transaction-history/index?symbol=' + symbol
         })
     },
-    getUserInfo: function(e) {
+    getUserInfo: function (e) {
         // 触发注册流程
         common.register(this)
         app.globalData.userInfo = e.detail.userInfo
@@ -229,10 +231,12 @@ Page({
             hasUserInfo: true
         })
     },
-    handleChange: function({ detail }) {
+    handleChange: function ({
+        detail
+    }) {
         common.navChange(detail);
     },
-    showAssetDaily: function(e){
+    showAssetDaily: function (e) {
         var symbol = e.currentTarget.id;
         wx.navigateTo({
             url: '/pages/asset-history/index?symbol=' + symbol,
